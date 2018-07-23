@@ -114,8 +114,8 @@ marker="LATEST.tar.gz"
 
 case "${1:-}" in
   create-archive)
-    check_tools aws git curl jq xzcat
-    check_vars AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+    check_tools git curl jq xzcat
+    # check_vars AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
 
     core_tmp=$(mktemp -d)
     upstream_depot="https://bldr.habitat.sh"
@@ -210,10 +210,11 @@ case "${1:-}" in
 
     cd /tmp
     tar zcvf "$tar_file" -C "$tmp_dir" .
-    echo "Uploading tar file to S3."
-    s3_cp "$tar_file" "s3://$bucket/"
-    s3_cp "s3://$bucket/$bootstrap_file" "s3://$bucket/$marker"
-    echo "Upload to S3 finished."
+    mv "$tar_file" ~/
+    # echo "Uploading tar file to S3."
+    # s3_cp "$tar_file" "s3://$bucket/"
+    # s3_cp "s3://$bucket/$bootstrap_file" "s3://$bucket/$marker"
+    # echo "Upload to S3 finished."
 
     ;;
   populate-depot)

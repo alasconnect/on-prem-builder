@@ -33,9 +33,9 @@ configure() {
   PGPASSWORD=$(cat /hab/svc/builder-datastore/config/pwfile)
 
   export ANALYTICS_ENABLED=${ANALYTICS_ENABLED:="false"}
-  export ANALYTICS_COMPANY_ID
-  export ANALYTICS_COMPANY_NAME
-  export ANALYTICS_WRITE_KEY
+  export ANALYTICS_COMPANY_ID=${ANALYTICS_COMPANY_ID:=""}
+  export ANALYTICS_COMPANY_NAME=${ANALYTICS_COMPANY_NAME:=""}
+  export ANALYTICS_WRITE_KEY=${ANALYTICS_WRITE_KEY:=""}
 
   if [ $ANALYTICS_ENABLED = "true" ]; then
     ANALYTICS_WRITE_KEY=${ANALYTICS_WRITE_KEY:="NAwVPW04CeESMW3vtyqjJZmVMNBSQ1K1"}
@@ -415,7 +415,8 @@ start_sessionsrv() {
 }
 
 start_minio() {
-  hab pkg install -bf core/aws-cli
+  hab pkg install core/aws-cli
+  hab pkg binlink core/aws-cli -f aws
   export AWS_ACCESS_KEY_ID="$MINIO_ACCESS_KEY"
   export AWS_SECRET_ACCESS_KEY="$MINIO_SECRET_KEY"
 

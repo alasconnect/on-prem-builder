@@ -26,3 +26,5 @@ EOT
 
 systemctl daemon-reload
 systemctl start hab-sup
+
+sleep 10
