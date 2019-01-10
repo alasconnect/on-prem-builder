@@ -214,8 +214,8 @@ declare -a packages
 
 case "${1:-}" in
   create-archive)
-    check_tools aws git curl jq xzcat
-    check_vars AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+    check_tools git curl jq xzcat
+    # check_vars AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
     populate_dirs
 
     for p in "${packages[@]}"
@@ -235,7 +235,7 @@ case "${1:-}" in
       fi
 
       for target in "${targets[@]}"
-      do 
+      do
 
         echo
         echo "[$pkg_count/$pkg_total] Resolving latest stable version of core/$pkg_name for $target"
@@ -285,7 +285,7 @@ case "${1:-}" in
     # done downloading stuff. let's package it up.
     cd /tmp
     tar zcvf "$tar_file" -C "$tmp_dir" .
-    upload_archive "$tar_file"
+    # upload_archive "$tar_file"
 
     ;;
 
@@ -344,7 +344,7 @@ case "${1:-}" in
         raw_ident_local=$(echo "$latest_local" | jq ".ident")
         if [ "$raw_ident_local" != "" ]; then
           slash_ident_local=$(jq '"\(.origin)/\(.name)/\(.version)/\(.release)"' <<< "$raw_ident_local" | tr -d '"')
-          release=$(echo ${raw_ident} | jq -r '.release') 
+          release=$(echo ${raw_ident} | jq -r '.release')
           release_local=$(echo ${raw_ident_local} | jq -r '.release')
 
           if (( "$release" <= "$release_local" )); then
